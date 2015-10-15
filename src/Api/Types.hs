@@ -9,7 +9,7 @@ import           Control.Applicative
 #endif
 import qualified Data.Text as T
 import           Data.Aeson
-import           Snap.Snaplet.PostgresqlSimple
+import           Snap.Snaplet.SqliteSimple
 
 data Todo = Todo
   { todoId   :: Int

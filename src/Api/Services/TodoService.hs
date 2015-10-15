@@ -11,10 +11,10 @@ import Control.Monad.State.Class
 import Data.Aeson
 import Snap.Core
 import Snap.Snaplet
-import Snap.Snaplet.PostgresqlSimple
+import Snap.Snaplet.SqliteSimple
 import qualified Data.ByteString.Char8 as B
 
-data TodoService = TodoService { _pg :: Snaplet Postgres }
+data TodoService = TodoService { _db :: Snaplet Sqlite }
 
 makeLenses ''TodoService
 
@@ -35,9 +35,9 @@ getTodos = do
 
 todoServiceInit :: SnapletInit b TodoService
 todoServiceInit = makeSnaplet "todos" "Todo Service" Nothing $ do
-  d <- nestSnaplet "pg" pg pgsInit
+  d <- nestSnaplet "db" db sqliteInit
   addRoutes todoRoutes
   return $ TodoService d
 
-instance HasPostgres (Handler b TodoService) where
-  getPostgresState = with pg get
+instance HasSqlite (Handler b TodoService) where
+  getSqliteState = with db get
