@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 ------------------------------------------------------------------------------
@@ -10,7 +11,9 @@ module Site
 
 ------------------------------------------------------------------------------
 import           Api.Core
+#if !MIN_VERSION_base(4,8,0)
 import           Control.Applicative
+#endif
 import           Data.ByteString (ByteString)
 import qualified Data.Text as T
 import           Snap.Core
