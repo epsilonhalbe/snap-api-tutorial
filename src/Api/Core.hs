@@ -17,8 +17,7 @@ apiRoutes :: [(B.ByteString, Handler b Api ())]
 apiRoutes = [("status", method GET respondOk)]
 
 respondOk :: Handler b Api ()
-respondOk = do
-  modifyResponse . setResponseCode $ 200
+respondOk = modifyResponse . setResponseCode $ 200
 
 apiInit :: SnapletInit b Api
 apiInit = makeSnaplet "api" "Core Api" Nothing $ do

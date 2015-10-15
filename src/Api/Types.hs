@@ -12,8 +12,8 @@ import           Data.Aeson
 import           Snap.Snaplet.PostgresqlSimple
 
 data Todo = Todo
-  { id   :: Int
-  , text :: T.Text
+  { todoId   :: Int
+  , todoText :: T.Text
   }
 
 instance FromRow Todo where
@@ -21,4 +21,4 @@ instance FromRow Todo where
                  <*> field
 
 instance ToJSON Todo where
-  toJSON (Todo id text) = object [ "id" .= id, "text" .= text ]
+  toJSON (Todo tId tText) = object [ "id" .= tId, "text" .= tText ]

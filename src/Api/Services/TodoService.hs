@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# OPTIONS_GHC -fno-warn-unused-do-bind #-}
 
 module Api.Services.TodoService where
 
@@ -34,9 +35,9 @@ getTodos = do
 
 todoServiceInit :: SnapletInit b TodoService
 todoServiceInit = makeSnaplet "todos" "Todo Service" Nothing $ do
-  pg <- nestSnaplet "pg" pg pgsInit
+  d <- nestSnaplet "pg" pg pgsInit
   addRoutes todoRoutes
-  return $ TodoService pg
+  return $ TodoService d
 
 instance HasPostgres (Handler b TodoService) where
   getPostgresState = with pg get
