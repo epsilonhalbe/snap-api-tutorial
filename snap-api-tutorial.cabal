@@ -21,6 +21,11 @@ Flag old-base
 Executable snap-api-tutorial
   hs-source-dirs: src
   main-is: Main.hs
+  other-modules: Api.Core
+               , Api.Services.TodoService
+               , Api.Types
+               , Application
+               , Site
 
   Build-depends:
     aeson                     >= 0.8.0.2,
@@ -30,12 +35,12 @@ Executable snap-api-tutorial
     mtl                       >= 2       && < 3,
     postgresql-simple         >= 0.4.9.0,
     snaplet-postgresql-simple >= 0.6,
-    snap                      >= 0.13    && < 0.14,
+    snap                      >= 0.13    && < 0.14.1,
     snap-core                 >= 0.9     && < 0.10,
     snap-server               >= 0.9     && < 0.10,
     snap-loader-static        >= 0.9     && < 0.10,
     text                      >= 0.11    && < 1.3,
-    time                      >= 1.1     && < 1.5,
+    time                      >= 1.1     && < 1.5.1,
     xmlhtml                   >= 0.1     && < 0.3
 
   if flag(old-base)
@@ -45,7 +50,7 @@ Executable snap-api-tutorial
   else
     build-depends:
       base                      >= 4.4      && < 5,
-      lens                      >= 3.7.6    && < 4.7
+      lens                      >= 3.7.6    && < 4.14
 
   if flag(development)
     build-depends:
