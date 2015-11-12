@@ -12,5 +12,5 @@ extra-deps: [ snap-loader-dynamic-0.10.0.3
 
 # Override default flag values for local packages and extra-deps
 flags: {
-    snap-api-tutorial: {development: true},
+    snap-api-tutorial: {development: false}
 }

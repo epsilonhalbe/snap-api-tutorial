@@ -7,7 +7,9 @@ module Api.Services.TodoService where
 
 import Api.Types
 import Control.Lens
+import Control.Monad.IO.Class
 import Control.Monad.State.Class
+import Control.Monad.Trans.Reader
 import Data.Aeson
 import Snap.Core
 import Snap.Snaplet
@@ -24,7 +26,7 @@ todoRoutes = [("/", method GET getTodos), ("/", method POST createTodo)]
 createTodo :: Handler b TodoService ()
 createTodo = do
   todoTextParam <- getPostParam "text"
-  execute "INSERT INTO todos (text) VALUES (?)" (Only todoTextParam)
+  execute "INSERT INTO todos (text) VALUES (?)" (Only $ B.unpack <$> todoTextParam)
   modifyResponse $ setResponseCode 201
 
 getTodos :: Handler b TodoService ()
@@ -36,6 +38,7 @@ getTodos = do
 todoServiceInit :: SnapletInit b TodoService
 todoServiceInit = makeSnaplet "todos" "Todo Service" Nothing $ do
   d <- nestSnaplet "db" db sqliteInit
+  liftIO $ runReaderT (execute_ "CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY, text TEXT)") d
   addRoutes todoRoutes
   return $ TodoService d
 
